@@ -34,17 +34,23 @@ const createCard = (req, res) => {
   Card.create({ name, link, owner })
     .then((card) => res.send(card))
     .catch((err) => {
-      catchErrorHandler(err, res);
+      res.status(500).json({ message: err });
     });
 };
 
 const deleteCard = (req, res) => {
-  Card.findByIdAndRemove(req.params.cardId)
+  Card.findById(req.params.cardId)
+    .populate('owner')
     .then((card) => {
-      findCardHandler(card, res);
+      const ownerId = card.owner._id.toString();
+      if (ownerId !== req.user._id) {
+        return res.status(404).send({ message: 'Вы не можете удалить чужую карточку' })
+      }
+      return Card.findByIdAndRemove(req.params.cardId);
     })
+    .then((card) => res.status(200).send(card))
     .catch((err) => {
-      catchErrorHandler(err, res);
+      res.status(500).send({ message: err.message });
     });
 };
 
