@@ -7,6 +7,8 @@ const unknownRoutes = require('./routes/unknown.js');
 const { createUser, login } = require('./controllers/users.js');
 const auth = require('./middlewares/auth.js');
 const errorHandler = require('./middlewares/error-handler.js');
+const { errors, celebrate, Joi } = require('celebrate');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 const PORT = 3000;
@@ -18,19 +20,30 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 });
 
 app.use(bodyParser.json());
-app.post('/signup', createUser);
-app.post('/signin', login);
-app.use(auth);
-// app.use((req, res, next) => {
-//   req.user = {
-//     _id: '5f9f0566bb9c8e18661c7a05',
-//   };
 
-//   next();
-// });
+app.use(requestLogger);
+
+app.post('/signup', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required(),
+  }),
+}), createUser);
+
+app.post('/signin', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required(),
+  }),
+}), login);
+
+app.use(auth);
 app.use('/', cardsRoutes);
 app.use('/', userRoutes);
 app.use('/', unknownRoutes);
+
+app.use(errorLogger);
+app.use(errors());
 app.use(errorHandler);
 
 app.listen(PORT);
