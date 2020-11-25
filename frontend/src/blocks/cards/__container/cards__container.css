@@ -1,0 +1,8 @@
+.cards__container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px 18px;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}

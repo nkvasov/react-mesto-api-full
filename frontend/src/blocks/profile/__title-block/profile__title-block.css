@@ -1,0 +1,13 @@
+.profile__title-block {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+
+@media screen and (max-width: 525px) {
+  .profile__title-block {
+    margin-bottom: 14px;
+    justify-content: center;
+  }
+}

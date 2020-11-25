@@ -1,0 +1,24 @@
+@import url(./__image/card__image.css);
+@import url(./__caption/card__caption.css);
+@import url(./__title/card__title.css);
+@import url(./__like-btn/card__like-btn.css);
+@import url(./__trash-btn/card__trash-btn.css);
+@import url(./__trash-btn/_enabled/card__trash-btn_enabled.css);
+@import url(./__like-numbers/card__like-numbers.css);
+@import url(./__like-block/card__like-block.css);
+.card {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: white;
+  color: #000000;
+
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+}

@@ -1,0 +1,39 @@
+@import url(./__title/form__title.css);
+@import url(./__input/form__input.css);
+@import url(./__input/_theme_dark/form__input_theme_dark.css);
+@import url(./__submit-btn/form__submit-btn.css);
+@import url(./__submit-btn/_theme_dark/form__submit-btn_theme_dark.css);
+@import url(./__close-btn/form__close-btn.css);
+@import url(./__field/form__field.css);
+@import url(./__input-error/form__input-error.css);
+@import url(./__alternative-link/form__alternative-link.css);
+@import url(./__image/form__image.css);
+@import url(./__tooltip/form__tooltip.css);
+
+.form {
+  position: relative;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 34px 36px 36px;
+  max-width: 430px;
+  min-width: 240px;
+  width: calc(100% - 80px);
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 10px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+
+
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+}
+
+@media screen and (max-width: 525px) {
+  .form {
+    padding: 30px 20px;
+  }
+}

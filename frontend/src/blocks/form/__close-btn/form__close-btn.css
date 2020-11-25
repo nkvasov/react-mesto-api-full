@@ -1,0 +1,15 @@
+.form__close-btn {
+  position: absolute;
+  right: -45px;
+  top: -45px;
+}
+
+
+
+@media screen and (max-width: 525px) {
+  .form__close-btn {
+    right: -35px;
+    top: -35px;
+    /* object-fit: contain; */
+  }
+}

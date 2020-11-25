@@ -1,0 +1,10 @@
+.form__alternative-link {
+  display: block;
+  color: #cccccc;
+  text-decoration: none;
+  margin: 0;
+  padding: 15px 0 0 0;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+}

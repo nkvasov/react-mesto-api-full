@@ -21,6 +21,14 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 app.use(bodyParser.json());
 
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+
+  next();
+});
+
 app.use(requestLogger);
 
 app.post('/signup', celebrate({
@@ -76,3 +84,6 @@ app.listen(PORT);
 // {
 //   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmJhNzFiYTUxNGRlYzBjYjQyMDBmMDEiLCJpYXQiOjE2MDYwNTU5OTQsImV4cCI6MTYwNjY2MDc5NH0.gK6zkCtpI0Yftz2ZetpWfrRs16I6DDW8_9ncdZ_zprs"
 // }
+
+// ssh nkvasov@84.201.158.199
+// nkvasov.students.nomoreparties.co:3000/

@@ -1,0 +1,8 @@
+.page__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  box-shadow: none;
+  border-radius: 0;
+}

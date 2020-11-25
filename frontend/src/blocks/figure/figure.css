@@ -1,0 +1,8 @@
+@import url(./__image/figure__image.css);
+@import url(./__caption/figure__caption.css);
+@import url(./__close-btn/figure__close-btn.css);
+
+.figure {
+  position: relative;
+  max-width: 75vw;
+}

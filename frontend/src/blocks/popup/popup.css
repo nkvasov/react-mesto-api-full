@@ -1,0 +1,28 @@
+@import url(./_content/popup_content_figure.css);
+@import url(./_content/popup_content_form.css);
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: #000000;
+  visibility: hidden;
+  opacity: 0;
+  /* transition: 0.5s ease; */
+  transition: visibility 0s ease 0.5s, opacity 0.5s ease;
+
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+}
+
+
+

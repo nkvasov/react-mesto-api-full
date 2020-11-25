@@ -1,0 +1,19 @@
+@import url(./__logo/header__logo.css);
+@import url(./__user-login/header__user-login.css);
+@import url(./__logout/header__logout.css);
+@import url(./__auth-block/header__auth-block.css);
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+}
+
+
+@media screen and (max-width: 525px) {
+  .header {
+    padding-left: 27px;
+    padding-bottom: 20px;
+  }
+}
