@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import logo from '../../images/mesto-russia-logo.svg';
 
 const Header = (props) => {
+  const currentUser = useContext(CurrentUserContext);
+
   return (
     <header className="header">
       <Link to="/" className="header__logo">
@@ -11,7 +14,8 @@ const Header = (props) => {
       <Switch>
         <Route exact path="/">
           <div className="header__auth-block">
-            <p className="header__user-login">{props.userLogin}</p>
+            {/* <p className="header__user-login">{props.userLogin}</p> */}
+            <p className="header__user-login">{currentUser.email}</p>
             <Link
               to="/sign-in"
               onClick={props.onExitClick}

@@ -1,4 +1,5 @@
-export const BASE_URL = 'https://auth.nomoreparties.co';
+// export const BASE_URL = 'http://nkvasov.students.nomoreparties.space';
+export const BASE_URL = 'http://localhost:3000';
 
 export const register = (password, email) => {
   return fetch(`${BASE_URL}/signup`, {
@@ -23,6 +24,7 @@ export const register = (password, email) => {
 };
 
 export const authorize = (password, email) => {
+  // console.log(email);
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers: {
@@ -44,7 +46,8 @@ export const getContent = (token) => {
     method: 'GET',
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
+      // "Authorization": `Bearer ${token}`,
+      "Authorization": token,
     }
   })
     .then(res => res.json())

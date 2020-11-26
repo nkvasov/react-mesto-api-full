@@ -69,6 +69,7 @@ const createUser = (req, res, next) => {
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
+  console.log(email);
 
   if (!email || !password) {
     throw new ValidationError('Введите e-mail и пароль');

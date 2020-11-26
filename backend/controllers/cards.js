@@ -8,6 +8,7 @@ const ForbiddenError = require('../errors/forbidden-error');
 const getCards = (req, res, next) => {
   Card.find({})
     .populate('owner')
+    // .populate('likes')
     .then((data) => {
       res.send(data);
     })
@@ -18,6 +19,7 @@ const createCard = (req, res, next) => {
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create({ name, link, owner })
+    .populate('owner')
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Ошибка! Что-то пошло не так.');
@@ -53,6 +55,7 @@ const likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(req.params.cardId,
     { $addToSet: { likes: req.user._id } },
     { new: true })
+    .populate('owner')
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Ошибка! Что-то пошло не так.');
@@ -66,6 +69,7 @@ const unlikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(req.params.cardId,
     { $pull: { likes: req.user._id } },
     { new: true })
+    .populate('owner')
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Ошибка! Что-то пошло не так.');

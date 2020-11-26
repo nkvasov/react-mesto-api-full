@@ -3,8 +3,10 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 const Card = ({card, onCardClick, onCardLike, onCardDelete}) => {
   const currentUser = useContext(CurrentUserContext);
-  const isOwn = card.owner._id === currentUser._id;
-  const isLiked = card.likes.some(user => user._id === currentUser._id);
+  // Если вдруг у карточки нет хозяина, ничего не сломается
+  const isOwn = card.owner ? card.owner._id === currentUser._id : false ;
+  // const isLiked = card.likes.some(user => user._id === currentUser._id);
+  const isLiked = card.likes.includes(currentUser._id);
 
   const handleImageClick = () => {
     onCardClick(card);

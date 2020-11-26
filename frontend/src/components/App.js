@@ -23,7 +23,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userLogin, setUserLogin] = useState('');
+  // const [userLogin, setUserLogin] = useState('');
   const [tooltipText, setTooltipText] = useState('');
   const [tooltipImage, setTooltipImage] = useState('');
   const history = useHistory();
@@ -31,12 +31,15 @@ function App() {
   function tokenCheck() {
     if (localStorage.getItem('jwt')) {
       const jwt = localStorage.getItem('jwt');
-      if (jwt) {
+      // console.log(jwt);
+      if (!!jwt) {
         return mestoAuth.getContent(jwt)
           .then((res) => {
+            // console.log(res);
             if (res) {
               setLoggedIn(true);
-              setUserLogin(res.data.email);
+              setCurrentUser(res);
+              // setUserLogin(res.email);
               history.push('/');
             }
           })
@@ -47,21 +50,34 @@ function App() {
 
   useEffect(() => {
     tokenCheck();
-  });
-
-  useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([userData, initialCards]) => {
-        setCurrentUser(userData);
-        setCards(initialCards);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }, []);
 
+  useEffect(() => {
+    api.getInitialCards()
+    .then((initialCards) => {
+      // console.log(initialCards);
+      setCards(initialCards.reverse());
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }, []);
+
+  // useEffect(() => {
+  //   Promise.all([api.getUserInfo(), api.getInitialCards()])
+  //     .then(([userData, initialCards]) => {
+  //       setCurrentUser(userData);
+  //       setCards(initialCards);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+
   function handleCardLike(card) {
-    const isLiked = card.likes.some(user => user._id === currentUser._id);
+    // const isLiked = card.likes.some(user => user._id == currentUser._id);
+    const isLiked = card.likes.includes(currentUser._id);
+    console.log(card.owner);
     api.changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
         const newCards = cards.map((c) => c._id === card._id ? newCard : c);
@@ -157,6 +173,7 @@ function App() {
   function signIn(password, email) {
     return mestoAuth.authorize(password, email)
       .then((data) => {
+        // console.log(data);
         if (data.token) tokenCheck();
       })
   }
@@ -167,7 +184,8 @@ function App() {
 
   function signOut() {
     localStorage.removeItem('jwt');
-    setUserLogin('');
+    setCurrentUser({});
+    // setUserLogin('');
     setLoggedIn(false);
   }
 
@@ -189,7 +207,7 @@ function App() {
         <div className="page__container">
 
           <Header
-            userLogin={userLogin}
+            // userLogin={userLogin}
             onExitClick={signOut}
           />
 

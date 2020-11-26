@@ -19,12 +19,12 @@ class Api {
     .then(this._handleOriginalResponse);
   }
 
-  getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers
-    })
-    .then(this._handleOriginalResponse);
-  }
+  // getUserInfo() {
+  //   return fetch(`${this._baseUrl}/users/me`, {
+  //     headers: this._headers
+  //   })
+  //   .then(this._handleOriginalResponse);
+  // }
 
   setUserInfo(inputValues) {
     return fetch(`${this._baseUrl}/users/me`, {
@@ -62,7 +62,7 @@ class Api {
   }
 
   likeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
       headers: this._headers
     })
@@ -70,7 +70,7 @@ class Api {
   }
 
   unlikeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this._headers
     })
@@ -89,10 +89,10 @@ class Api {
 // Создаем экземпляр API
 export const api = new Api({
   // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
-  baseUrl: 'http://nkvasov.students.nomoreparties.co',
-  // mode: 'no-cors',
-  // headers: {
-  //   authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmJkNDA1MGUxYjMwMjc4OGY0MDFhOTEiLCJpYXQiOjE2MDYyNDIzNTQsImV4cCI6MTYwNjg0NzE1NH0.IgydUE8EapmoLdzmpKWlK7zXIErhfpMJyjt_nDVoids',
-  //   'Content-Type': 'application/json',
-  // }
+  // baseUrl: 'http://nkvasov.students.nomoreparties.space',
+  baseUrl: 'http://localhost:3000',
+  headers: {
+    authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmJmNjMyOGQ0ODBiZTA2NmE0ODgwODQiLCJpYXQiOjE2MDY0MTIwOTQsImV4cCI6MTYwNzAxNjg5NH0.mQHnpuxnX8R3CM1qK1MXWbb8ESchjzfiMLDflxaoXn4',
+    'Content-Type': 'application/json',
+  }
 });
