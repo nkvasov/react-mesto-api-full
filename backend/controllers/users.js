@@ -69,7 +69,7 @@ const createUser = (req, res, next) => {
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
-  console.log(email);
+  // console.log(email);
 
   if (!email || !password) {
     throw new ValidationError('Введите e-mail и пароль');
@@ -114,10 +114,10 @@ const updateProfile = (req, res, next) => {
 };
 
 const updateAvatar = (req, res, next) => {
-  const { link } = req.body;
+  const { avatar } = req.body;
   User.findByIdAndUpdate(
     req.user._id,
-    { link },
+    { avatar },
     {
       new: true,
       runValidators: true,

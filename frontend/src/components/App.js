@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 
 import Header from './Header/Header';
@@ -8,7 +8,8 @@ import Login from './Login/Login';
 import Footer from './Footer/Footer';
 import Main from './Main/Main';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
-import { api } from '../utils/Api';
+// import { api } from '../utils/Api';
+import Api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import * as mestoAuth from '../mestoAuth';
 import failIcon from '../images/fail-icon.svg';
@@ -27,6 +28,8 @@ function App() {
   const [tooltipText, setTooltipText] = useState('');
   const [tooltipImage, setTooltipImage] = useState('');
   const history = useHistory();
+  const api = useRef();
+  // let api;
 
   function tokenCheck() {
     if (localStorage.getItem('jwt')) {
@@ -49,11 +52,27 @@ function App() {
   };
 
   useEffect(() => {
+    // console.log('1');
     tokenCheck();
   }, []);
 
   useEffect(() => {
-    api.getInitialCards()
+    // console.log('2');
+    const jwt = localStorage.getItem('jwt');
+    api.current = new Api({
+      // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
+      // baseUrl: 'http://nkvasov.students.nomoreparties.space',
+      baseUrl: 'http://localhost:3000',
+      headers: {
+        authorization: `Bearer ${jwt}`,
+        'Content-Type': 'application/json',
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    // console.log('3');
+    api.current.getInitialCards()
     .then((initialCards) => {
       // console.log(initialCards);
       setCards(initialCards.reverse());
@@ -77,8 +96,8 @@ function App() {
   function handleCardLike(card) {
     // const isLiked = card.likes.some(user => user._id == currentUser._id);
     const isLiked = card.likes.includes(currentUser._id);
-    console.log(card.owner);
-    api.changeLikeCardStatus(card._id, isLiked)
+    // console.log(card.owner);
+    api.current.changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
         const newCards = cards.map((c) => c._id === card._id ? newCard : c);
         setCards(newCards);
@@ -89,7 +108,7 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    api.deleteCard(card._id)
+    api.current.deleteCard(card._id)
       .then(() => {
         const deletedCardIndex = cards.findIndex((c) => c._id === card._id);
         const newCards = cards.slice();
@@ -114,7 +133,7 @@ function App() {
   };
 
   const handleUpdateUser = (userData) => {
-    return api.setUserInfo(userData)
+    return api.current.setUserInfo(userData)
       .then((res) => {
         setCurrentUser(res);
       })
@@ -127,7 +146,7 @@ function App() {
   };
 
   const handleUpdateAvatar = (userData) => {
-    return api.setAvatar(userData)
+    return api.current.setAvatar(userData)
       .then((res) => {
         setCurrentUser(res);
       })
@@ -140,8 +159,9 @@ function App() {
   };
 
   const handleAddPlaceSubmit = (cardData) => {
-    return api.postCard(cardData)
+    return api.current.postCard(cardData)
       .then((newCard) => {
+        console.log(newCard);
         setCards([newCard, ...cards])
       })
       .catch((err) => {

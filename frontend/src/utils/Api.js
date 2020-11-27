@@ -1,4 +1,4 @@
-class Api {
+export default class Api {
   constructor({baseUrl, headers}) {
     this._baseUrl = baseUrl;
     this._headers = headers;
@@ -87,12 +87,13 @@ class Api {
 }
 
 // Создаем экземпляр API
-export const api = new Api({
-  // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
-  // baseUrl: 'http://nkvasov.students.nomoreparties.space',
-  baseUrl: 'http://localhost:3000',
-  headers: {
-    authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmJmNjMyOGQ0ODBiZTA2NmE0ODgwODQiLCJpYXQiOjE2MDY0MTIwOTQsImV4cCI6MTYwNzAxNjg5NH0.mQHnpuxnX8R3CM1qK1MXWbb8ESchjzfiMLDflxaoXn4',
-    'Content-Type': 'application/json',
-  }
-});
+// export const api = new Api({
+//   // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
+//   // baseUrl: 'http://nkvasov.students.nomoreparties.space',
+//   baseUrl: 'http://localhost:3000',
+//   headers: {
+
+//     authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmJmNjMyOGQ0ODBiZTA2NmE0ODgwODQiLCJpYXQiOjE2MDY0MTIwOTQsImV4cCI6MTYwNzAxNjg5NH0.mQHnpuxnX8R3CM1qK1MXWbb8ESchjzfiMLDflxaoXn4',
+//     'Content-Type': 'application/json',
+//   }
+// });

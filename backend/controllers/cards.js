@@ -19,7 +19,7 @@ const createCard = (req, res, next) => {
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create({ name, link, owner })
-    .populate('owner')
+    // .populate('owner')
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Ошибка! Что-то пошло не так.');
