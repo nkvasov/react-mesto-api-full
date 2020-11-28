@@ -14,6 +14,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import * as mestoAuth from '../mestoAuth';
 import failIcon from '../images/fail-icon.svg';
 import successIcon from '../images/success-icon.svg';
+import { BASE_URL } from '../mestoAuth';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -61,26 +62,28 @@ function App() {
     const jwt = localStorage.getItem('jwt');
     api.current = new Api({
       // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
-      // baseUrl: 'http://nkvasov.students.nomoreparties.space',
-      baseUrl: 'http://localhost:3000',
+      baseUrl: BASE_URL,
+      // baseUrl: 'http://localhost:3000',
       headers: {
         authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
       }
     });
-  }, []);
+  }, [loggedIn]);
 
   useEffect(() => {
-    // console.log('3');
-    api.current.getInitialCards()
-    .then((initialCards) => {
-      // console.log(initialCards);
-      setCards(initialCards.reverse());
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }, []);
+    if (loggedIn) {
+      // console.log('3');
+      api.current.getInitialCards()
+        .then((initialCards) => {
+          // console.log(initialCards);
+          setCards(initialCards.reverse());
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [loggedIn]);
 
   // useEffect(() => {
   //   Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -161,9 +164,16 @@ function App() {
   const handleAddPlaceSubmit = (cardData) => {
     return api.current.postCard(cardData)
       .then((newCard) => {
-        console.log(newCard);
-        setCards([newCard, ...cards])
+        // console.log(newCard.owner);
+        // console.log(newCard);
+        // console.log(newCard.name);
+        // console.log(newCard._id);
+        setCards([newCard, ...cards]);
+        // return newCard;
       })
+      // .then((card) => {
+      //   setCards([card, ...cards]);
+      // })
       .catch((err) => {
         console.log(err);
       })
@@ -193,8 +203,9 @@ function App() {
   function signIn(password, email) {
     return mestoAuth.authorize(password, email)
       .then((data) => {
-        // console.log(data);
-        if (data.token) tokenCheck();
+        if (data.token) {
+          tokenCheck();
+        }
       })
   }
 
@@ -205,12 +216,11 @@ function App() {
   function signOut() {
     localStorage.removeItem('jwt');
     setCurrentUser({});
-    // setUserLogin('');
     setLoggedIn(false);
   }
 
-  function handleAuthError() {
-    setTooltipText('Что-то пошло не так! Попробуйте ещё раз.');
+  function handleAuthError(err = { message: 'Что-то пошло не так. Попробуйте еще раз.'}) {
+    setTooltipText(err.message);
     setTooltipImage(failIcon);
     setIsInfoTooltipPopupOpen(true);
   }

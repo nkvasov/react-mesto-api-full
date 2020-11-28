@@ -1,7 +1,7 @@
 const SALT_ROUND = 10;
-const JWT_SECRET = 'INFINITE SADNESS';
+const JWT_SECRET_DEV = 'INFINITE SADNESS';
 
 module.exports = {
   SALT_ROUND,
-  JWT_SECRET
+  JWT_SECRET_DEV
 }

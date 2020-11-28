@@ -1,8 +1,11 @@
+require('dotenv').config();
+const { NODE_ENV, JWT_SECRET } = process.env;
+const { JWT_SECRET_DEV } = require('../configs/index.js');
+
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = require('../configs/index.js');
 
 const auth = (req, res, next) => {
-  const { authorization} = req.headers;
+  const { authorization } = req.headers;
   if (!authorization) {
     return res.status(401).send({ message: 'Необходима авторизация' });
   }
@@ -10,7 +13,9 @@ const auth = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, JWT_SECRET);
+    payload = jwt.verify(token,
+      NODE_ENV === 'production' ? JWT_SECRET : JWT_SECRET_DEV
+    );
   } catch (error) {
     return res.status(401).send({ message: 'Необходима авторизация' });
   }
@@ -18,6 +23,9 @@ const auth = (req, res, next) => {
   req.user = payload;
   next();
 };
+
+
+
 
 // const auth = (req, res, next) => {
 //   const { authorization: token} = req.headers;

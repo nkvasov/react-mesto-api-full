@@ -28,8 +28,7 @@ const Login = ({ handleLogin, handleError }) => {
       history.push('/');
     })
       .catch((err) => {
-        handleError();
-        console.log(err);
+        handleError(err);
       });
   };
 
@@ -77,7 +76,5 @@ const Login = ({ handleLogin, handleError }) => {
     </form>
   );
 }
-
-// data: {_id: "5fa5563886203500127df706", email: "nkvasov@yandex.ru"}
 
 export default Login;

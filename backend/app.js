@@ -1,3 +1,6 @@
+require('dotenv').config();
+const { NODE_ENV, JWT_SECRET } = process.env;
+// console.log(process.env.NODE_ENV);
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -12,7 +15,7 @@ const { errors, celebrate, Joi } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
-const PORT = 3000;
+const { PORT = 3000 } = process.env;
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
@@ -24,6 +27,11 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 // app.use(function(req, res, next) {
 //   res.header('Access-Control-Allow-Origin', 'http://localhost:3001');
 //   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');

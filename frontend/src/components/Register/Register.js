@@ -30,8 +30,7 @@ const Register = ({ handleRegistration, handleError, handleSuccess }) => {
         }
       })
       .catch((err) => {
-        handleError();
-        console.log(err);
+        handleError(err);
       });
   };
 

@@ -15,18 +15,30 @@ const getCards = (req, res, next) => {
     .catch(next);
 };
 
-const createCard = (req, res, next) => {
+const createCard = async (req, res, next) => {
   const { name, link } = req.body;
   const owner = req.user._id;
-  Card.create({ name, link, owner })
-    // .populate('owner')
-    .then((card) => {
-      if (!card) {
-        throw new NotFoundError('Ошибка! Что-то пошло не так.');
-      }
-      return res.status(201).send(card);
-    })
-    .catch(next);
+  try {
+    let newCard = await Card.create({ name, link, owner });
+    newCard = await newCard.populate('owner').execPopulate();
+    if (!newCard) {
+      throw new NotFoundError('Ошибка! Что-то пошло не так.');
+    }
+    return res.status(201).send(newCard);
+  } catch (error) {
+    next(error);
+  }
+
+  // Card.create({ name, link, owner })
+  // .populate('owner')
+  // .then((card) => {
+  //   if (!card) {
+  //     throw new NotFoundError('Ошибка! Что-то пошло не так.');
+  //   }
+  //   console.log(card);
+  //   return res.status(201).send(card);
+  // })
+  // .catch(next);
 };
 
 const deleteCard = (req, res, next) => {

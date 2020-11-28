@@ -1,7 +1,10 @@
+require('dotenv').config();
+const { NODE_ENV, JWT_SECRET } = process.env;
+const { JWT_SECRET_DEV } = require('../configs/index');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.js');
-const { SALT_ROUND, JWT_SECRET } = require('../configs/index.js');
+const { SALT_ROUND } = require('../configs/index.js');
 const NotFoundError = require('../errors/not-found-err');
 const ValidationError = require('../errors/validation-error');
 const AuthError = require('../errors/auth-error');
@@ -62,7 +65,7 @@ const createUser = (req, res, next) => {
       })
     })
     .then((user) => {
-      res.send(user);
+      res.status(201).send(user);
     })
     .catch(next);
 };
@@ -88,7 +91,11 @@ const login = (req, res, next) => {
         })
     })
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : JWT_SECRET_DEV,
+        // JWT_SECRET,
+        { expiresIn: '7d' });
       return res.send({ token });
     })
     .catch(next);
