@@ -18,10 +18,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "predeploy-gh": "npm run build",
+    "deploy-gh": "gh-pages -d build",
+    "deploy": "scp -r ./build/* nkvasov@84.201.158.199:/home/nkvasov/frontend-build"
   },
-  "homepage": "https://nkvasov.github.io/",
+  "homepage": "/",
   "eslintConfig": {
     "extends": "react-app"
   },

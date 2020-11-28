@@ -23,8 +23,12 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useFindAndModify: false,
 });
 
-app.use(cors());
+const corsOptions = {
+  origin: 'http://www.nkvasov.students.nomoreparties.space/',
+};
+app.use('*', cors(corsOptions));
 
+app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/crash-test', () => {
