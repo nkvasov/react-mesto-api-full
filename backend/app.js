@@ -1,6 +1,5 @@
 require('dotenv').config();
 const { NODE_ENV, JWT_SECRET } = process.env;
-// console.log(process.env.NODE_ENV);
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -23,12 +22,12 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useFindAndModify: false,
 });
 
-const corsOptions = {
-  origin: 'http://www.nkvasov.students.nomoreparties.space/',
-};
-app.use('*', cors(corsOptions));
+// const corsOptions = {
+//   origin: 'http://www.nkvasov.students.nomoreparties.space/',
+// };
+app.use('*', cors());
 
-app.use(cors());
+// app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/crash-test', () => {
