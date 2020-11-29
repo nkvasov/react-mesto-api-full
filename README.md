@@ -6,8 +6,8 @@ Api на express.
 Галерея генерируется на основе данных, запрашиваемых с сервера.
 
 ## Ссылка на текущую версию проекта:
-[react-mesto-api](http://www.nkvasov.students.nomoreparties.space/index.html)
+[react-mesto-api](http://www.nkvasov.students.nomoreparties.space/)
 
 
-## Ip
+## IP
 084.201.158.199
