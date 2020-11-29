@@ -1,8 +1,5 @@
 const Card = require('../models/card.js');
 const NotFoundError = require('../errors/not-found-err');
-// const ValidationError = require('../errors/validation-error');
-// const AuthError = require('../errors/auth-error');
-// const ConflictError = require('../errors/conflict-error');
 const ForbiddenError = require('../errors/forbidden-error');
 
 const getCards = (req, res, next) => {
@@ -28,17 +25,6 @@ const createCard = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-
-  // Card.create({ name, link, owner })
-  // .populate('owner')
-  // .then((card) => {
-  //   if (!card) {
-  //     throw new NotFoundError('Ошибка! Что-то пошло не так.');
-  //   }
-  //   console.log(card);
-  //   return res.status(201).send(card);
-  // })
-  // .catch(next);
 };
 
 const deleteCard = (req, res, next) => {

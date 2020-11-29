@@ -50,7 +50,6 @@ const Register = ({ handleRegistration, handleError, handleSuccess }) => {
             type="email"
             name="email"
             placeholder="Email"
-            // required
             value={email}
             onChange={handleEmailInputChange}
           />
@@ -62,9 +61,6 @@ const Register = ({ handleRegistration, handleError, handleSuccess }) => {
             type="password"
             name="password"
             placeholder="Пароль"
-            // required
-            // minLength="5"
-            // maxLength="15"
             value={password}
             onChange={handlePasswordInputChange}
           />
@@ -80,7 +76,5 @@ const Register = ({ handleRegistration, handleError, handleSuccess }) => {
     </form>
   );
 }
-// Ответ после регистрации:
-// {data: {_id: "5fa5563886203500127df706", email: "nkvasov@yandex.ru"}}
 
 export default Register;

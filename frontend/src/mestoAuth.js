@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://nkvasov.students.nomoreparties.space';
+export const BASE_URL = 'http://api.nkvasov.students.nomoreparties.space';
 // export const BASE_URL = 'http://localhost:3000';
 
 const handleOriginalResponse = (res) => {
@@ -19,15 +19,6 @@ export const register = (password, email) => {
     body: JSON.stringify({ password, email })
   })
     .then(handleOriginalResponse)
-    // .then((response) => {
-    //   try {
-    //     if (response.status === 201) {
-    //       return response.json();
-    //     }
-    //   } catch (e) {
-    //     return (e);
-    //   }
-    // })
     .then((res) => {
       return res;
     })
@@ -42,7 +33,6 @@ export const authorize = (password, email) => {
     body: JSON.stringify({ password, email })
   })
     .then(handleOriginalResponse)
-    // .then((response) => response.json())
     .then((data) => {
       if (data.token) {
         localStorage.setItem('jwt', data.token);
@@ -57,7 +47,6 @@ export const getContent = (token) => {
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`,
-      // "Authorization": token,
     }
   })
     .then(res => res.json())

@@ -72,12 +72,6 @@ const Main = (props) => {
         </ul>
       </section>
 
-      {/* <PopupWithForm
-        name='confirmation'
-        title='Вы уверены?'
-        onClose={closeAllPopups}
-        submitBtnText='Да' /> */}
-
       <EditAvatarPopup
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
@@ -115,4 +109,3 @@ const Main = (props) => {
 }
 
 export default Main;
-

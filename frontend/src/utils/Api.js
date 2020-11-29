@@ -19,13 +19,6 @@ export default class Api {
     .then(this._handleOriginalResponse);
   }
 
-  // getUserInfo() {
-  //   return fetch(`${this._baseUrl}/users/me`, {
-  //     headers: this._headers
-  //   })
-  //   .then(this._handleOriginalResponse);
-  // }
-
   setUserInfo(inputValues) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
@@ -85,15 +78,3 @@ export default class Api {
     }
   }
 }
-
-// Создаем экземпляр API
-// export const api = new Api({
-//   // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
-//   // baseUrl: 'http://nkvasov.students.nomoreparties.space',
-//   baseUrl: 'http://localhost:3000',
-//   headers: {
-
-//     authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmJmNjMyOGQ0ODBiZTA2NmE0ODgwODQiLCJpYXQiOjE2MDY0MTIwOTQsImV4cCI6MTYwNzAxNjg5NH0.mQHnpuxnX8R3CM1qK1MXWbb8ESchjzfiMLDflxaoXn4',
-//     'Content-Type': 'application/json',
-//   }
-// });

@@ -47,7 +47,6 @@ const Login = ({ handleLogin, handleError }) => {
             type="email"
             name="email"
             placeholder="Email"
-            // required
             value={email}
             onChange={handleEmailInputChange}
           />
@@ -59,9 +58,6 @@ const Login = ({ handleLogin, handleError }) => {
             type="password"
             name="password"
             placeholder="Пароль"
-            // required
-            // minLength="5"
-            // maxLength="15"
             value={password}
             onChange={handlePasswordInputChange}
           />

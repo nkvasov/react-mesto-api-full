@@ -8,7 +8,6 @@ import Login from './Login/Login';
 import Footer from './Footer/Footer';
 import Main from './Main/Main';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
-// import { api } from '../utils/Api';
 import Api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import * as mestoAuth from '../mestoAuth';
@@ -25,25 +24,20 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
-  // const [userLogin, setUserLogin] = useState('');
   const [tooltipText, setTooltipText] = useState('');
   const [tooltipImage, setTooltipImage] = useState('');
   const history = useHistory();
   const api = useRef();
-  // let api;
 
   function tokenCheck() {
     if (localStorage.getItem('jwt')) {
       const jwt = localStorage.getItem('jwt');
-      // console.log(jwt);
       if (!!jwt) {
         return mestoAuth.getContent(jwt)
           .then((res) => {
-            // console.log(res);
             if (res) {
               setLoggedIn(true);
               setCurrentUser(res);
-              // setUserLogin(res.email);
               history.push('/');
             }
           })
@@ -53,17 +47,13 @@ function App() {
   };
 
   useEffect(() => {
-    // console.log('1');
     tokenCheck();
   }, []);
 
   useEffect(() => {
-    // console.log('2');
     const jwt = localStorage.getItem('jwt');
     api.current = new Api({
-      // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
       baseUrl: BASE_URL,
-      // baseUrl: 'http://localhost:3000',
       headers: {
         authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
@@ -73,10 +63,8 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      // console.log('3');
       api.current.getInitialCards()
         .then((initialCards) => {
-          // console.log(initialCards);
           setCards(initialCards.reverse());
         })
         .catch((err) => {
@@ -85,21 +73,8 @@ function App() {
     }
   }, [loggedIn]);
 
-  // useEffect(() => {
-  //   Promise.all([api.getUserInfo(), api.getInitialCards()])
-  //     .then(([userData, initialCards]) => {
-  //       setCurrentUser(userData);
-  //       setCards(initialCards);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-
   function handleCardLike(card) {
-    // const isLiked = card.likes.some(user => user._id == currentUser._id);
     const isLiked = card.likes.includes(currentUser._id);
-    // console.log(card.owner);
     api.current.changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
         const newCards = cards.map((c) => c._id === card._id ? newCard : c);
@@ -164,16 +139,8 @@ function App() {
   const handleAddPlaceSubmit = (cardData) => {
     return api.current.postCard(cardData)
       .then((newCard) => {
-        // console.log(newCard.owner);
-        // console.log(newCard);
-        // console.log(newCard.name);
-        // console.log(newCard._id);
         setCards([newCard, ...cards]);
-        // return newCard;
       })
-      // .then((card) => {
-      //   setCards([card, ...cards]);
-      // })
       .catch((err) => {
         console.log(err);
       })
@@ -219,7 +186,7 @@ function App() {
     setLoggedIn(false);
   }
 
-  function handleAuthError(err = { message: 'Что-то пошло не так. Попробуйте еще раз.'}) {
+  function handleAuthError(err = { message: 'Что-то пошло не так. Попробуйте еще раз.' }) {
     setTooltipText(err.message);
     setTooltipImage(failIcon);
     setIsInfoTooltipPopupOpen(true);
@@ -237,7 +204,6 @@ function App() {
         <div className="page__container">
 
           <Header
-            // userLogin={userLogin}
             onExitClick={signOut}
           />
 
