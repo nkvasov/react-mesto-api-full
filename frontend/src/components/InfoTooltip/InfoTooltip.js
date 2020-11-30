@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-expressions */
 import React, { useEffect } from 'react';
 
-const InfoTooltip = ({ isOpen, onClose, onEscPress, tooltipText, tooltipImage }) => {
-
+const InfoTooltip = ({
+  isOpen, onClose, onEscPress, tooltipText, tooltipImage,
+}) => {
   const className = `popup popup_content_form ${isOpen && 'popup_opened'}`;
 
   useEffect(() => {
@@ -28,7 +30,7 @@ const InfoTooltip = ({ isOpen, onClose, onEscPress, tooltipText, tooltipImage })
       </div>
 
     </section>
-  )
-}
+  );
+};
 
 export default InfoTooltip;

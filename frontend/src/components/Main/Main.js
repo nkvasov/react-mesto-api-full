@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
-import ImagePopup from '../ImagePopup/ImagePopup.js';
-import Card from '../Card/Card.js';
+import ImagePopup from '../ImagePopup/ImagePopup';
+import Card from '../Card/Card';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import EditProfilePopup from '../EditProfilePopup/EditProfilePopup';
 import EditAvatarPopup from '../EditAvatarPopup/EditAvatarPopup';
 import AddPlacePopup from '../AddPlacePopup/AddPlacePopup';
 
 const Main = (props) => {
-  const { onEditProfile,
+  const {
+    onEditProfile,
     onAddPlace,
     onEditAvatar,
     closeAllPopups,
@@ -23,7 +24,8 @@ const Main = (props) => {
     isEditAvatarPopupOpen,
     isAddPlacePopupOpen,
     selectedCard,
-    cards } = props;
+    cards,
+  } = props;
   const currentUser = useContext(CurrentUserContext);
 
   return (
@@ -106,6 +108,6 @@ const Main = (props) => {
     </main>
 
   );
-}
+};
 
 export default Main;

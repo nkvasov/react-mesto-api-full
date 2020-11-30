@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 const Login = ({ handleLogin, handleError }) => {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
@@ -22,11 +21,11 @@ const Login = ({ handleLogin, handleError }) => {
       return;
     }
     handleLogin(password, email)
-    .then(() => {
-      setEmail('');
-      setPassword('');
-      history.push('/');
-    })
+      .then(() => {
+        setEmail('');
+        setPassword('');
+        history.push('/');
+      })
       .catch((err) => {
         handleError(err);
       });
@@ -71,6 +70,6 @@ const Login = ({ handleLogin, handleError }) => {
       </div>
     </form>
   );
-}
+};
 
 export default Login;

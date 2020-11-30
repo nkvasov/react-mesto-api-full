@@ -40,7 +40,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     select: false,
-  }
+  },
 });
 
 module.exports = model('user', userSchema);

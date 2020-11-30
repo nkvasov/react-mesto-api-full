@@ -1,8 +1,14 @@
+/* eslint-disable no-unused-expressions */
 import React, { useContext, useState, useEffect } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
-const EditProfilePopup = ({ isOpen, onClose, onUpdateUser, onEscPress }) => {
+const EditProfilePopup = ({
+  isOpen,
+  onClose,
+  onUpdateUser,
+  onEscPress,
+}) => {
   const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState(' ');
   const [description, setDescription] = useState(' ');
@@ -67,6 +73,6 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser, onEscPress }) => {
       </div>
     </PopupWithForm>
   );
-}
+};
 
 export default EditProfilePopup;

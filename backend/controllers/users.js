@@ -1,8 +1,9 @@
 require('dotenv').config();
+
 const { NODE_ENV, JWT_SECRET } = process.env;
-const { JWT_SECRET_DEV } = require('../configs/index');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { JWT_SECRET_DEV } = require('../configs/index');
 const User = require('../models/user.js');
 const { SALT_ROUND } = require('../configs/index.js');
 const NotFoundError = require('../errors/not-found-err');
@@ -22,6 +23,9 @@ const getUsers = (req, res) => {
 
 const getUser = (req, res, next) => {
   const { userId } = req.params;
+  if (!userId) {
+    throw new AuthError('Ошибка авторизации');
+  }
   User.findOne({ _id: userId })
     .then((user) => {
       if (!user) {
@@ -43,10 +47,16 @@ const getUserInfo = (req, res, next) => {
 };
 
 const createUser = (req, res, next) => {
-  const { name, about, avatar, email, password } = req.body;
+  const {
+    name,
+    about,
+    avatar,
+    email,
+    password,
+  } = req.body;
 
   if (!email || !password) {
-    throw new ValidationError('Введите e-mail и пароль')
+    throw new ValidationError('Введите e-mail и пароль');
   }
   User.findOne({ email })
     .then((user) => {
@@ -55,15 +65,13 @@ const createUser = (req, res, next) => {
       }
       return bcrypt.hash(password, SALT_ROUND);
     })
-    .then((hash) => {
-      return User.create({
-        name,
-        about,
-        avatar,
-        email,
-        password: hash,
-      })
-    })
+    .then((hash) => User.create({
+      name,
+      about,
+      avatar,
+      email,
+      password: hash,
+    }))
     .then((user) => {
       res.status(201).send(user);
     })
@@ -72,7 +80,6 @@ const createUser = (req, res, next) => {
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
-  // console.log(email);
 
   if (!email || !password) {
     throw new ValidationError('Введите e-mail и пароль');
@@ -88,19 +95,24 @@ const login = (req, res, next) => {
             throw new AuthError('Неправильные почта или пароль');
           }
           return user;
-        })
+        });
     })
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
         NODE_ENV === 'production' ? JWT_SECRET : JWT_SECRET_DEV,
-        { expiresIn: '7d' });
+        { expiresIn: '7d' },
+      );
       return res.send({ token });
     })
     .catch(next);
 };
 
 const updateProfile = (req, res, next) => {
+  const id = req.user._id;
+  if (!id) {
+    throw new AuthError('Ошибка авторизации');
+  }
   const { name, about } = req.body;
   User.findByIdAndUpdate(
     req.user._id,

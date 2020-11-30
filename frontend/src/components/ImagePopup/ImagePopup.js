@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable max-len */
 import React from 'react';
 
 const ImagePopup = ({ card, onClose, onEscPress }) => {
-
   const className = `popup popup_content_figure image-popup ${card && 'popup_opened'}`;
   // Создаем реф для хранения url картинки  для реализации плавного затухания картинки при закрытии попапа.
   const src = React.useRef('');
@@ -14,7 +15,6 @@ const ImagePopup = ({ card, onClose, onEscPress }) => {
       card && document.removeEventListener('keydown', onEscPress);
     });
   }, [card, onEscPress]);
-
 
   return (
     <section className={className} onClick={onClose}>
@@ -35,5 +35,5 @@ const ImagePopup = ({ card, onClose, onEscPress }) => {
       </figure>
     </section>
   );
-}
-export default ImagePopup
+};
+export default ImagePopup;

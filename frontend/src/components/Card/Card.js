@@ -1,7 +1,12 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-const Card = ({card, onCardClick, onCardLike, onCardDelete}) => {
+const Card = ({
+  card,
+  onCardClick,
+  onCardLike,
+  onCardDelete,
+}) => {
   const currentUser = useContext(CurrentUserContext);
   // Если вдруг у карточки нет хозяина, ничего не сломается
   const isOwn = card.owner ? card.owner._id === currentUser._id : false;
@@ -10,13 +15,13 @@ const Card = ({card, onCardClick, onCardLike, onCardDelete}) => {
 
   const handleImageClick = () => {
     onCardClick(card);
-  }
+  };
   const handleLikeClick = () => {
     onCardLike(card);
-  }
+  };
   const handleTrashClick = () => {
     onCardDelete(card);
-  }
+  };
 
   const likeClassName = `card__like-btn ${isLiked && 'card__like-btn_enabled'}`;
   const TrashClassName = `card__trash-btn ${isOwn && 'card__trash-btn_enabled'}`;
@@ -48,5 +53,5 @@ const Card = ({card, onCardClick, onCardLike, onCardDelete}) => {
       </div>
     </li>
   );
-}
+};
 export default Card;

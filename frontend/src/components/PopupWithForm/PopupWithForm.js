@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, { useState, useEffect } from 'react';
 
 const PopupWithForm = (props) => {
@@ -10,7 +11,8 @@ const PopupWithForm = (props) => {
     onClose,
     onSubmit,
     onEscPress,
-    children } = props;
+    children,
+  } = props;
   const popupClassName = `popup popup_content_form ${name}-popup ${isOpen && 'popup_opened'}`;
   const [isLoading, setIsLoading] = useState(false);
 
@@ -55,5 +57,3 @@ const PopupWithForm = (props) => {
   );
 };
 export default PopupWithForm;
-
-

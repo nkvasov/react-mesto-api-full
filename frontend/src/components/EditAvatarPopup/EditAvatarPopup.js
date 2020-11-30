@@ -6,7 +6,7 @@ const EditAvatarPopup = ({
   isOpen,
   onClose,
   onUpdateAvatar,
-  onEscPress
+  onEscPress,
 }) => {
   const currentUser = useContext(CurrentUserContext);
   const inputRef = useRef();
@@ -42,7 +42,7 @@ const EditAvatarPopup = ({
         <span className="form__input-error form__input-error_origin_avatar-link" />
       </div>
     </PopupWithForm>
-  )
-}
+  );
+};
 
 export default EditAvatarPopup;

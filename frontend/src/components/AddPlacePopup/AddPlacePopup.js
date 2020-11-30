@@ -5,7 +5,7 @@ const AddPlacePopup = ({
   isOpen,
   onClose,
   onUpdateCards,
-  onEscPress
+  onEscPress,
 }) => {
   const [placeName, setPlaceName] = useState('');
   const [placeUrl, setPlaceUrl] = useState('');
@@ -21,18 +21,19 @@ const AddPlacePopup = ({
   const resetInputs = () => {
     setPlaceName('');
     setPlaceUrl('');
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     return onUpdateCards({
       name: placeName,
-      link: placeUrl
+      link: placeUrl,
     });
   };
-
+  // eslint-disable-next-line
   // для возвращения инпутов в исходное состояние при открытии попапа после нажатия esc или клика по оверлею
   useEffect(() => {
+    // eslint-disable-next-line no-unused-expressions
     isOpen && resetInputs();
   }, [isOpen]);
 
@@ -75,7 +76,7 @@ const AddPlacePopup = ({
         <span className="form__input-error form__input-error_origin_card-link" />
       </div>
     </PopupWithForm>
-  )
-}
+  );
+};
 
 export default AddPlacePopup;

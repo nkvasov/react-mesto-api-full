@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 const Register = ({ handleRegistration, handleError, handleSuccess }) => {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
@@ -23,6 +22,7 @@ const Register = ({ handleRegistration, handleError, handleSuccess }) => {
     }
     handleRegistration(password, email)
       .then((res) => {
+        // eslint-disable-next-line no-console
         console.log(res);
         if (res) {
           history.push('/sign-in');
@@ -75,6 +75,6 @@ const Register = ({ handleRegistration, handleError, handleSuccess }) => {
       </div>
     </form>
   );
-}
+};
 
 export default Register;

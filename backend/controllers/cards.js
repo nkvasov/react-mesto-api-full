@@ -12,6 +12,7 @@ const getCards = (req, res, next) => {
     .catch(next);
 };
 
+// eslint-disable-next-line
 const createCard = async (req, res, next) => {
   const { name, link } = req.body;
   const owner = req.user._id;
@@ -27,6 +28,7 @@ const createCard = async (req, res, next) => {
   }
 };
 
+// Перед удалением карточки проверяем ее принадлежность пользователю
 const deleteCard = (req, res, next) => {
   Card.findById(req.params.cardId)
     .populate('owner')
@@ -50,10 +52,16 @@ const deleteCard = (req, res, next) => {
 };
 
 const likeCard = (req, res, next) => {
-  Card.findByIdAndUpdate(req.params.cardId,
-    { $addToSet: { likes: req.user._id } },
-    { new: true })
-    .populate('owner')
+  Card.findById(req.params.cardId)
+    .then((card) => {
+      if (!card) {
+        throw new NotFoundError('Ошибка! Что-то пошло не так.');
+      }
+      return Card.findByIdAndUpdate(req.params.cardId,
+        { $addToSet: { likes: req.user._id } },
+        { new: true })
+        .populate('owner');
+    })
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Ошибка! Что-то пошло не так.');
@@ -64,10 +72,16 @@ const likeCard = (req, res, next) => {
 };
 
 const unlikeCard = (req, res, next) => {
-  Card.findByIdAndUpdate(req.params.cardId,
-    { $pull: { likes: req.user._id } },
-    { new: true })
-    .populate('owner')
+  Card.findById(req.params.cardId)
+    .then((card) => {
+      if (!card) {
+        throw new NotFoundError('Ошибка! Что-то пошло не так.');
+      }
+      return Card.findByIdAndUpdate(req.params.cardId,
+        { $pull: { likes: req.user._id } },
+        { new: true })
+        .populate('owner');
+    })
     .then((card) => {
       if (!card) {
         throw new NotFoundError('Ошибка! Что-то пошло не так.');

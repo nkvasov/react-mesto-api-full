@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect, useRef } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 
@@ -29,10 +30,11 @@ function App() {
   const history = useHistory();
   const api = useRef();
 
+  // eslint-disable-next-line
   function tokenCheck() {
     if (localStorage.getItem('jwt')) {
       const jwt = localStorage.getItem('jwt');
-      if (!!jwt) {
+      if (jwt) {
         return mestoAuth.getContent(jwt)
           .then((res) => {
             if (res) {
@@ -44,7 +46,7 @@ function App() {
           .catch((err) => console.log(err));
       }
     }
-  };
+  }
 
   useEffect(() => {
     tokenCheck();
@@ -57,7 +59,7 @@ function App() {
       headers: {
         authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
-      }
+      },
     });
   }, [loggedIn]);
 
@@ -77,7 +79,7 @@ function App() {
     const isLiked = card.likes.includes(currentUser._id);
     api.current.changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
-        const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+        const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
         setCards(newCards);
       })
       .catch((err) => {
@@ -110,58 +112,57 @@ function App() {
     setIsAddPlacePopupOpen(true);
   };
 
-  const handleUpdateUser = (userData) => {
-    return api.current.setUserInfo(userData)
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        closeAllPopups();
-      });
+  const closeAllPopups = () => {
+    // eslint-disable-next-line no-unused-expressions
+    isEditProfilePopupOpen && setIsEditProfilePopupOpen(false);
+    // eslint-disable-next-line no-unused-expressions
+    isEditAvatarPopupOpen && setIsEditAvatarPopupOpen(false);
+    // eslint-disable-next-line no-unused-expressions
+    isAddPlacePopupOpen && setIsAddPlacePopupOpen(false);
+    // eslint-disable-next-line no-unused-expressions
+    isInfoTooltipPopupOpen && setIsInfoTooltipPopupOpen(false);
+    // eslint-disable-next-line no-unused-expressions
+    selectedCard && setSelectedCard(null);
   };
 
-  const handleUpdateAvatar = (userData) => {
-    return api.current.setAvatar(userData)
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        closeAllPopups();
-      });
-  };
+  const handleUpdateUser = (userData) => api.current.setUserInfo(userData)
+    .then((res) => {
+      setCurrentUser(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      closeAllPopups();
+    });
 
-  const handleAddPlaceSubmit = (cardData) => {
-    return api.current.postCard(cardData)
-      .then((newCard) => {
-        setCards([newCard, ...cards]);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        closeAllPopups();
-      });
-  };
+  const handleUpdateAvatar = (userData) => api.current.setAvatar(userData)
+    .then((res) => {
+      setCurrentUser(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      closeAllPopups();
+    });
+
+  const handleAddPlaceSubmit = (cardData) => api.current.postCard(cardData)
+    .then((newCard) => {
+      setCards([newCard, ...cards]);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      closeAllPopups();
+    });
 
   const handleEscPress = (e) => {
     if (e.key === 'Escape') {
       closeAllPopups();
     }
-  }
-
-  const closeAllPopups = () => {
-    isEditProfilePopupOpen && setIsEditProfilePopupOpen(false);
-    isEditAvatarPopupOpen && setIsEditAvatarPopupOpen(false);
-    isAddPlacePopupOpen && setIsAddPlacePopupOpen(false);
-    isInfoTooltipPopupOpen && setIsInfoTooltipPopupOpen(false);
-    selectedCard && setSelectedCard(null);
-  }
+  };
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
@@ -173,7 +174,7 @@ function App() {
         if (data.token) {
           tokenCheck();
         }
-      })
+      });
   }
 
   function signUp(password, email) {
@@ -231,7 +232,10 @@ function App() {
             />
 
             <Route path='/sign-up'>
-              <Register handleRegistration={signUp} handleError={handleAuthError} handleSuccess={handleAuthSuccess} />
+              <Register
+                handleRegistration={signUp}
+                handleError={handleAuthError}
+                handleSuccess={handleAuthSuccess} />
             </Route>
 
             <Route path='/sign-in'>
@@ -258,4 +262,3 @@ function App() {
 }
 
 export default App;
-
