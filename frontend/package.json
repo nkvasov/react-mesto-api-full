@@ -20,7 +20,7 @@
     "eject": "react-scripts eject",
     "predeploy-gh": "npm run build",
     "deploy-gh": "gh-pages -d build",
-    "deploy": "scp -r ./build/* nkvasov@84.201.158.199:/home/nkvasov/frontend-build"
+    "deploy": "npm run build && scp -r ./build/* nkvasov@84.201.158.199:/home/nkvasov/frontend-build"
   },
   "homepage": "/",
   "browserslist": {

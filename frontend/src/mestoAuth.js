@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://api.nkvasov.students.nomoreparties.space';
+export const BASE_URL = 'https://api.nkvasov.students.nomoreparties.space';
 // export const BASE_URL = 'http://localhost:3000';
 
 const handleOriginalResponse = (res) => {
